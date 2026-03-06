@@ -18,7 +18,7 @@ namespace Lista_de_compras.Helper
         {
             string sql = "UPDATE Produto SET Descricao=?, Quantidade=? WHERE id=? ";
             return _conn.QueryAsync<Produto>(
-                sql,p.Descrição,p.Quantidade,p.Preco,p.Id
+                sql,p.Descricao,p.Quantidade,p.Preco,p.Id
                 );
         }
         public Task <int>Delete(int id)
