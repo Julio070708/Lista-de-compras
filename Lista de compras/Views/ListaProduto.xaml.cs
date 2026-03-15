@@ -1,22 +1,89 @@
+using Lista_de_compras.Models;
+using System.Collections.ObjectModel;
+
 namespace Lista_de_compras.Views;
 
 public partial class ListaProduto : ContentPage
 {
-	public ListaProduto()
-	{
-		InitializeComponent();
-	}
-	
-	private void TollbarItem_Clicked(object sender, EventArgs e)
-	{
-		try
-		{
-			Navigation.PushAsync(new Views.NovoProduto());
+    ObservableCollection<Produto> lista = new ObservableCollection<Produto>();
 
+    public ListaProduto()
+    {
+        InitializeComponent();
+        lst_produtos.ItemsSource = lista;
+    }
+
+    protected async override void OnAppearing()
+    {
+        base.OnAppearing();
+
+        lista.Clear();
+
+        List<Produto> tmp = await App.Db.GetAll();
+
+        foreach (Produto p in tmp)
+        {
+            lista.Add(p);
+        }
+    }
+
+    private async void txt_search_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        try
+        {
+            string busca = e.NewTextValue;
+
+            lista.Clear();
+
+            List<Produto> produtos = await App.Db.Search(busca);
+
+            foreach (Produto p in produtos)
+            {
+                lista.Add(p);
+            }
         }
         catch (Exception ex)
-		{
-			DisplayAlert("Ops", ex.Message, "OK");
-		}
-	}
+        {
+            await DisplayAlert("Erro", ex.Message, "OK");
+        }
+    }
+
+    private async void TollbarItem_Clicked(object sender, EventArgs e)
+    {
+        try
+        {
+            await Navigation.PushAsync(new NovoProduto());
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Erro", ex.Message, "OK");
+        }
+    }
+
+    private async void MenuItem_Clicked(object sender, EventArgs e)
+    {
+        try
+        {
+            MenuItem item = sender as MenuItem;
+
+            Produto produto = item.BindingContext as Produto;
+
+            bool confirmar = await DisplayAlert(
+                "Remover",
+                "Deseja remover este produto?",
+                "Sim",
+                "Não");
+
+            if (confirmar)
+            {
+                await App.Db.Delete(produto.Id);
+
+                lista.Remove(produto);
+            }
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Erro", ex.Message, "OK");
+        }
+    }
 }
