@@ -2,13 +2,14 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Lista_de_compras.Views.NovoProduto"
-             Title="NovoProduto">
+             Title="Novo Produto">
 
-    <ContentPage.ToolbarItems Spacing="10" Padding="10">
+    <ContentPage.ToolbarItems>
         <ToolbarItem Text="Salvar" Clicked="ToolbarItem_Clicked" />
     </ContentPage.ToolbarItems>
-    
-    <VerticalStackLayout>
+
+    <VerticalStackLayout Padding="10">
+
         <Label Text="Descrição do Produto:" />
         <Entry x:Name="txt_descricao" />
 
@@ -17,5 +18,7 @@
 
         <Label Text="Preço Unitário:" />
         <Entry x:Name="txt_preco" Keyboard="Numeric" />
+
     </VerticalStackLayout>
+
 </ContentPage>

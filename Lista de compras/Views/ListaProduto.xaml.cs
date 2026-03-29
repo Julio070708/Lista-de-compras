@@ -1,4 +1,4 @@
-using Lista_de_compras.Models;
+﻿using Lista_de_compras.Models;
 using System.Collections.ObjectModel;
 
 namespace Lista_de_compras.Views;
@@ -31,7 +31,7 @@ public partial class ListaProduto : ContentPage
     {
         try
         {
-            string busca = e.NewTextValue;
+            string busca = e.NewTextValue ?? "";
 
             lista.Clear();
 
@@ -60,30 +60,68 @@ public partial class ListaProduto : ContentPage
         }
     }
 
+    // 🔥 BOTÃO SOMAR CORRIGIDO
+    private async void Somar_Clicked(object sender, EventArgs e)
+    {
+        try
+        {
+            double totalGeral = 0;
+
+            foreach (Produto p in lista)
+            {
+                totalGeral += p.Quantidade * p.Preco;
+            }
+
+            await DisplayAlert("Total Geral", $"Total da lista: R$ {totalGeral:F2}", "OK");
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Erro", ex.Message, "OK");
+        }
+    }
+
     private async void MenuItem_Clicked(object sender, EventArgs e)
     {
         try
         {
             MenuItem item = sender as MenuItem;
 
-            Produto produto = item.BindingContext as Produto;
+            if (item?.BindingContext is not Produto produto)
+                return;
 
             bool confirmar = await DisplayAlert(
                 "Remover",
                 "Deseja remover este produto?",
                 "Sim",
-                "N�o");
+                "Não");
 
             if (confirmar)
             {
                 await App.Db.Delete(produto.Id);
-
                 lista.Remove(produto);
             }
         }
         catch (Exception ex)
         {
             await DisplayAlert("Erro", ex.Message, "OK");
+        }
+    }
+
+    private async void lst_produtos_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+    {
+        try
+        {
+            if (e.SelectedItem is Produto p)
+            {
+                await Navigation.PushAsync(new Views.EditarProduto
+                {
+                    BindingContext = p,
+                });
+            }
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Ops", ex.Message, "OK");
         }
     }
 }

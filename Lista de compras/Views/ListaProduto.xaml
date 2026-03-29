@@ -5,18 +5,19 @@
              Title="Lista de Produtos">
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Somar"/>
+        <ToolbarItem Text="Somar" Clicked="Somar_Clicked"/>
         <ToolbarItem Text="Adicionar" Clicked="TollbarItem_Clicked"/>
     </ContentPage.ToolbarItems>
 
-    <VerticalStackLayout>
+    <VerticalStackLayout Padding="10">
 
         <SearchBar 
             x:Name="txt_search"
             Placeholder="Busca de Produtos"
             TextChanged="txt_search_TextChanged"/>
 
-        <ListView x:Name="lst_produtos">
+        <ListView x:Name="lst_produtos" 
+                  ItemSelected="lst_produtos_ItemSelected">
 
             <ListView.Header>
                 <Grid ColumnDefinitions="*,*,*,*,*">
@@ -37,13 +38,11 @@
                         </ViewCell.ContextActions>
 
                         <Grid ColumnDefinitions="*,*,*,*,*">
-
                             <Label Grid.Column="0" Text="{Binding Id}" />
                             <Label Grid.Column="1" Text="{Binding Descricao}" />
                             <Label Grid.Column="2" Text="{Binding Quantidade}" />
                             <Label Grid.Column="3" Text="{Binding Preco}" />
                             <Label Grid.Column="4" Text="{Binding Total}" />
-
                         </Grid>
 
                     </ViewCell>
