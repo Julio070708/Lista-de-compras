@@ -19,16 +19,19 @@
         <ListView x:Name="lst_produtos" 
                   ItemSelected="lst_produtos_ItemSelected">
 
+            <!-- CABEÇALHO -->
             <ListView.Header>
-                <Grid ColumnDefinitions="*,*,*,*,*">
+                <Grid ColumnDefinitions="*,*,*,*,*,*">
                     <Label Grid.Column="0" Text="ID"/>
                     <Label Grid.Column="1" Text="Descrição"/>
                     <Label Grid.Column="2" Text="Quantidade"/>
                     <Label Grid.Column="3" Text="Preço"/>
                     <Label Grid.Column="4" Text="Total"/>
+                    <Label Grid.Column="5" Text="Categoria"/>
                 </Grid>
             </ListView.Header>
 
+            <!-- LISTA -->
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
@@ -37,12 +40,13 @@
                             <MenuItem Text="Remover" Clicked="MenuItem_Clicked"/>
                         </ViewCell.ContextActions>
 
-                        <Grid ColumnDefinitions="*,*,*,*,*">
+                        <Grid ColumnDefinitions="*,*,*,*,*,*">
                             <Label Grid.Column="0" Text="{Binding Id}" />
                             <Label Grid.Column="1" Text="{Binding Descricao}" />
                             <Label Grid.Column="2" Text="{Binding Quantidade}" />
                             <Label Grid.Column="3" Text="{Binding Preco}" />
                             <Label Grid.Column="4" Text="{Binding Total}" />
+                            <Label Grid.Column="5" Text="{Binding Categoria}" />
                         </Grid>
 
                     </ViewCell>

@@ -1,4 +1,4 @@
-using Lista_de_compras.Models;
+﻿using Lista_de_compras.Models;
 
 namespace Lista_de_compras.Views;
 
@@ -18,6 +18,9 @@ public partial class NovoProduto : ContentPage
                 Descricao = txt_descricao.Text,
                 Quantidade = Convert.ToDouble(txt_quantidade.Text),
                 Preco = Convert.ToDouble(txt_preco.Text),
+
+                // 👇 ADICIONA ISSO
+                Categoria = txt_categoria.Text
             };
 
             await App.Db.Insert(p);

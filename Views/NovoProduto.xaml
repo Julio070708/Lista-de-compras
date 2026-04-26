@@ -8,7 +8,7 @@
         <ToolbarItem Text="Salvar" Clicked="ToolbarItem_Clicked" />
     </ContentPage.ToolbarItems>
 
-    <VerticalStackLayout Padding="10">
+    <VerticalStackLayout Padding="10" Spacing="10">
 
         <Label Text="Descrição do Produto:" />
         <Entry x:Name="txt_descricao" />
@@ -18,6 +18,10 @@
 
         <Label Text="Preço Unitário:" />
         <Entry x:Name="txt_preco" Keyboard="Numeric" />
+
+        <!-- NOVO -->
+        <Label Text="Categoria:" />
+        <Entry x:Name="txt_categoria" />
 
     </VerticalStackLayout>
 
