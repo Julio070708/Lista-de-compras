@@ -60,19 +60,19 @@ public partial class ListaProduto : ContentPage
         }
     }
 
-    // 🔥 BOTÃO SOMAR CORRIGIDO
+    // 🔥 RELATÓRIO POR CATEGORIA (AQUI FOI ALTERADO)
     private async void Somar_Clicked(object sender, EventArgs e)
     {
         try
         {
-            double totalGeral = 0;
+            var relatorio = lista
+                .GroupBy(p => p.Categoria)
+                .Select(g => $"{g.Key}: R$ {g.Sum(p => p.Total):F2}")
+                .ToList();
 
-            foreach (Produto p in lista)
-            {
-                totalGeral += p.Quantidade * p.Preco;
-            }
-
-            await DisplayAlert("Total Geral", $"Total da lista: R$ {totalGeral:F2}", "OK");
+            await DisplayAlert("Relatório por Categoria",
+                string.Join("\n", relatorio),
+                "OK");
         }
         catch (Exception ex)
         {
